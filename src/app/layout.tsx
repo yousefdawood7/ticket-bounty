@@ -31,7 +31,7 @@ export default function RootLayout({
       >
         <ThemeProvider>
           <NavBar />
-          <main className="bg-secondary/20 min-h-svh px-10 py-25">
+          <main className="bg-secondary/20 flex min-h-svh flex-col gap-y-12 px-10 py-25">
             {children}
           </main>
         </ThemeProvider>
