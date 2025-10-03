@@ -1,6 +1,6 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import Placeholder from "@/components/Placeholder";
-import { Button } from "@/components/ui/button";
 import { tickets } from "@/data";
 import TicketItem from "@/features/ticket/components/TicketItem";
 
@@ -12,19 +12,9 @@ export default async function page({ params }: PageProps) {
   const { id } = await params;
   const activeTicket = tickets.find((ticket) => ticket.id === id);
 
+  // prettier-ignore
   if (!activeTicket)
-    return (
-      <Placeholder
-        message="Ticket not found"
-        button={
-          <Button variant={"outline"}>
-            <Link href="/tickets" className="font-semibold">
-              Go to Tickets
-            </Link>
-          </Button>
-        }
-      />
-    );
+    notFound()
 
   return (
     <section className="mx-auto w-full max-w-xl">
