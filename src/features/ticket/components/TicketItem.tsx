@@ -17,7 +17,7 @@ export default function TicketItem({
 }) {
   const detailedButton = (
     <Button variant={"outline"} size={"icon"} asChild>
-      <Link href={`/tickets/${id}`}>
+      <Link href={`/tickets/${id}`} prefetch={true}>
         <LucideSquareArrowOutUpRight />
       </Link>
     </Button>
