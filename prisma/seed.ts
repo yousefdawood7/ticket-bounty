@@ -5,19 +5,19 @@ const prisma = new PrismaClient();
 export const tickets = [
   {
     title: "Ticket 1",
-    content: "Ticket Content",
+    content: "Ticket 1 Content DB",
     status: TicketStatus.OPEN,
   },
 
   {
     title: "Ticket 2",
-    content: "Ticket2 Content",
+    content: "Ticket 2 Content DB",
     status: TicketStatus.DONE,
   },
 
   {
     title: "Ticket 3",
-    content: "Ticket Content",
+    content: "Ticket 3 Content DB",
     status: TicketStatus.IN_PROGRESS,
   },
 ];

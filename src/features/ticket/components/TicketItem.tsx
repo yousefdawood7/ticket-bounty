@@ -1,8 +1,9 @@
 import { cloneElement } from "react";
 import Link from "next/link";
-import { LucideSquareArrowOutUpRight } from "lucide-react";
+import { LucideSquareArrowOutUpRight, LucideTrash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { deleteTicket } from "@/features/ticket/actions/actions";
 import { TICKET_ICONS } from "@/features/ticket/constants";
 import { Ticket } from "@/features/ticket/types";
 import { cn } from "@/lib/utils";
@@ -14,6 +15,24 @@ export default function TicketItem({
   ticket: Ticket;
   isDetailed?: boolean;
 }) {
+  const detailedButton = (
+    <Button variant={"outline"} size={"icon"} asChild>
+      <Link href={`/tickets/${id}`}>
+        <LucideSquareArrowOutUpRight />
+      </Link>
+    </Button>
+  );
+
+  const deleteButton = (
+    <Button
+      variant={"outline"}
+      size={"icon"}
+      onClick={deleteTicket.bind(null, id)}
+    >
+      <LucideTrash2 />
+    </Button>
+  );
+
   return (
     <div className="flex gap-x-2.5">
       <Card className="bg-background/95 w-full">
@@ -36,13 +55,7 @@ export default function TicketItem({
           </p>
         </CardContent>
       </Card>
-      {!isDetailed && (
-        <Button variant={"outline"} size={"icon"} asChild>
-          <Link href={`/tickets/${id}`}>
-            <LucideSquareArrowOutUpRight />
-          </Link>
-        </Button>
-      )}
+      {isDetailed ? deleteButton : detailedButton}
     </div>
   );
 }

@@ -1,8 +1,6 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import Placeholder from "@/components/Placeholder";
-import { tickets } from "@/data";
 import TicketItem from "@/features/ticket/components/TicketItem";
+import { getTicket } from "@/features/ticket/queries/get-ticket";
 
 type PageProps = {
   params: Promise<{ id: string }>;
@@ -10,7 +8,7 @@ type PageProps = {
 
 export default async function page({ params }: PageProps) {
   const { id } = await params;
-  const activeTicket = tickets.find((ticket) => ticket.id === id);
+  const activeTicket = await getTicket(id);
 
   // prettier-ignore
   if (!activeTicket)
