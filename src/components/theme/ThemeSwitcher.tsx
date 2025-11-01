@@ -13,8 +13,8 @@ export default function ThemeSwitcher() {
 
   return (
     <Button variant={"outline"} size={"icon"} onClick={handleSwitchTheme}>
-      <LucideSun className="scale-100 rotate-0 !transition-transform duration-250 dark:scale-0 dark:rotate-90" />
-      <LucideMoon className="absolute scale-0 rotate-90 !transition-transform duration-250 dark:scale-100 dark:rotate-0" />
+      <LucideSun className="scale-100 rotate-0 transition-transform! duration-250 dark:scale-0 dark:rotate-90" />
+      <LucideMoon className="absolute scale-0 rotate-90 transition-transform! duration-250 dark:scale-100 dark:rotate-0" />
     </Button>
   );
 }
