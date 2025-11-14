@@ -1,4 +1,6 @@
+import { Suspense } from "react";
 import PageHeading from "@/app/_components/PageHeading";
+import Spinner from "@/components/Spinner";
 import TicketList from "@/features/ticket/components/TicketList";
 
 export default function page() {
@@ -9,7 +11,9 @@ export default function page() {
         description="All your tickets at one place"
       />
 
-      <TicketList />
+      <Suspense fallback={<Spinner />}>
+        <TicketList />
+      </Suspense>
     </>
   );
 }

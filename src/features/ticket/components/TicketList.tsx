@@ -1,8 +1,13 @@
+import { cacheLife, cacheTag } from "next/cache";
 import Placeholder from "@/components/Placeholder";
 import TicketItem from "@/features/ticket/components/TicketItem";
 import { getTickets } from "@/features/ticket/queries/get-tickets";
 
 export default async function TicketList() {
+  "use cache";
+  cacheLife("default");
+  cacheTag("tickets");
+
   const tickets = await getTickets();
 
   if (!tickets.length)
