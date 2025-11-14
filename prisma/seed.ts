@@ -1,7 +1,6 @@
 import { PrismaClient, TicketStatus } from "@/generated/prisma/client";
 
 const prisma = new PrismaClient();
-
 export const tickets = [
   {
     title: "Ticket 1",
