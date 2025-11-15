@@ -4,36 +4,25 @@ import { updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 
-export async function createTicket(data: FormData) {
+export async function upsertTicket(id: string, data: FormData) {
   const { title, content } = Object.fromEntries(data) as {
     title: string;
     content: string;
   };
 
   try {
-    await prisma.tickets.create({ data: { title, content } });
-    updateTag("tickets");
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function editTicket(id: string, data: FormData) {
-  const { title, content } = Object.fromEntries(data) as {
-    title: string;
-    content: string;
-  };
-
-  try {
-    await prisma.tickets.update({
+    await prisma.tickets.upsert({
       where: { id },
-      data: { title, content },
+      update: { title, content },
+      create: { title, content },
     });
     updateTag("tickets");
   } catch (error) {
     console.log(error);
   } finally {
-    return redirect("/tickets");
+    // prettier-ignore
+    if (id)
+      return redirect(`/tickets/${id}`);
   }
 }
 

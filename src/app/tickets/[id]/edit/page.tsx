@@ -1,6 +1,5 @@
 import notFound from "@/app/tickets/[id]/not-found";
 import { Button } from "@/components/ui/button";
-import { editTicket } from "@/features/ticket/actions/actions";
 import CardForm from "@/features/ticket/components/ticket-forms/CardForm";
 import TicketForm from "@/features/ticket/components/ticket-forms/TicketForm";
 import { getTicket } from "@/features/ticket/queries/get-ticket";
@@ -15,21 +14,12 @@ export default async function Page({
   if (!ticket)
     return notFound();
 
-  const { id: ticketID, title, content } = ticket;
-
   return (
     <CardForm
       title="Edit Ticket"
       description="Edit an existing ticket"
       className="bg-background/95 mx-auto my-auto w-full max-w-lg"
-      content={
-        <TicketForm
-          formID={"edit-form"}
-          ticketAction={editTicket.bind(null, ticketID)}
-          defaultTitle={title}
-          defaultContent={content}
-        />
-      }
+      content={<TicketForm formID={"edit-form"} ticket={ticket} />}
       footer={
         <Button
           form="edit-form"

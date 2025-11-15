@@ -67,7 +67,7 @@ export default function TicketItem({
           </p>
         </CardContent>
       </Card>
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-1">
         {editButton}
         {isDetailed ? deleteButton : detailedButton}
       </div>
