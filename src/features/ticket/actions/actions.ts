@@ -1,28 +1,40 @@
 "use server";
 
 import { updateTag } from "next/cache";
-import { redirect } from "next/navigation";
+import { redirect, unstable_rethrow as rethrow } from "next/navigation";
+import z, { ZodError } from "zod";
+import { ticketFormSchema } from "@/features/ticket/schemas";
 import { prisma } from "@/lib/prisma";
+import { ActionReturnType } from "@/lib/types";
 
-export async function upsertTicket(id: string, data: FormData) {
-  const { title, content } = Object.fromEntries(data) as {
-    title: string;
-    content: string;
-  };
-
+export async function upsertTicket(
+  id: string,
+  _prevState: ActionReturnType,
+  data: FormData,
+): Promise<ActionReturnType> {
   try {
+    const ticket = ticketFormSchema.parse(Object.fromEntries(data));
+    const isEditied = !!id;
+
     await prisma.tickets.upsert({
       where: { id },
-      update: { title, content },
-      create: { title, content },
+      update: ticket,
+      create: ticket,
     });
     updateTag("tickets");
-  } catch (error) {
-    console.log(error);
-  } finally {
+
     // prettier-ignore
-    if (id)
-      return redirect(`/tickets/${id}`);
+    if (isEditied)
+      redirect(`/tickets/${id}`);
+
+    return {
+      message: `Ticket ${isEditied ? "Edited" : "Created"} Successfully`,
+    };
+  } catch (error) {
+    rethrow(error);
+    if (error instanceof ZodError)
+      return { message: "", fieldErrors: z.flattenError(error).fieldErrors };
+    return { message: "Something went wrong. please try again" };
   }
 }
 
@@ -31,7 +43,7 @@ export async function deleteTicket(id: string) {
     await prisma.tickets.delete({ where: { id } });
     updateTag("tickets");
   } catch (error) {
-    console.log(error);
+    if (error instanceof ZodError) console.log(error.issues);
   } finally {
     return redirect("/tickets");
   }
