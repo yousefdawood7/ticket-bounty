@@ -17,7 +17,9 @@ export default function Placeholder({
   return (
     <section className="flex flex-1 flex-col items-center justify-center gap-3.5">
       {cloneElement(icon, iconStyles)}
-      <p className="text-center text-xl font-semibold">{message}</p>
+      <p className="max-w-2xl text-center text-xl leading-8 font-semibold">
+        {message}
+      </p>
       {button}
     </section>
   );
