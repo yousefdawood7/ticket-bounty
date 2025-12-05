@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 import NavBar from "@/app/_components/NavBar";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import "./globals.css";
@@ -34,6 +35,7 @@ export default function RootLayout({
           <main className="bg-secondary/20 flex min-h-svh flex-col gap-y-12 px-10 py-25">
             {children}
           </main>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
