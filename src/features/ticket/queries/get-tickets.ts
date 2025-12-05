@@ -1,10 +1,11 @@
 import { prisma } from "@/lib/prisma";
+import { tryCatch } from "@/lib/utils";
 
 export async function getTickets() {
-  try {
-    return prisma.tickets.findMany({ orderBy: { createdAt: "desc" } });
-  } catch (error) {
-    console.log("Error fetching tickets:", error);
-    throw error;
-  }
+  const { data } = await tryCatch(
+    () => prisma.tickets.findMany({ orderBy: { createdAt: "desc" } }),
+    true,
+  );
+
+  return data;
 }

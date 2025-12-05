@@ -1,16 +1,12 @@
 import { cloneElement } from "react";
 import Link from "next/link";
-import {
-  LucidePencil,
-  LucideSquareArrowOutUpRight,
-  LucideTrash2,
-} from "lucide-react";
+import { LucidePencil, LucideSquareArrowOutUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { deleteTicket } from "@/features/ticket/actions/actions";
 import { TICKET_ICONS } from "@/features/ticket/constants";
 import { Ticket } from "@/features/ticket/types";
 import { cn } from "@/lib/utils";
+import DeleteTicketITem from "@/features/ticket/components/DeleteTicketITem";
 
 export default function TicketItem({
   ticket: { id, title, content, status },
@@ -32,16 +28,6 @@ export default function TicketItem({
       <Link href={`/tickets/${id}/edit`} prefetch={true}>
         <LucidePencil />
       </Link>
-    </Button>
-  );
-
-  const deleteButton = (
-    <Button
-      variant={"outline"}
-      size={"icon"}
-      onClick={deleteTicket.bind(null, id)}
-    >
-      <LucideTrash2 />
     </Button>
   );
 
@@ -69,7 +55,7 @@ export default function TicketItem({
       </Card>
       <div className="flex flex-col gap-1">
         {editButton}
-        {isDetailed ? deleteButton : detailedButton}
+        {isDetailed ? <DeleteTicketITem id={id} /> : detailedButton}
       </div>
     </div>
   );
